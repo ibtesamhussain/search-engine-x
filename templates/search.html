@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <style>
+        
+
+        h1 {
+
+            font-size: 36px;
+
+            color: #333;
+
+            margin-bottom: 20px;
+
+        }
+
+        h2 {
+
+            font-size: 24px;
+
+            color: blue;
+
+            margin-bottom: 10px;
+
+        }
+        h3 {
+
+            font-size: 24px;
+
+            color: red;
+
+            margin-bottom: 10px;
+
+        }        
+            form {
+            font-size: 18px;
+        }
+
+        label {
+            font-size: 34px;
+        }
+
+        label span {
+            /* Your existing styles */
+        }
+
+        hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 0;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+      <h1 style="text-align: center;">Search Results</h1>
+
+    <h3 style="text-align: center;">Searched Word: {{ word }}</h3>
+
+    <h2 style="text-align: center;">Total No Of Occurrences: {{ results[0][0] }}</h2>
+    <h2 style="text-align: center;">Exact Results: {{ results[0][1] }}</h2>
+    <h2 style="text-align: center;">Partial Results: {{ results[0][2] }}</h2>
+
+    <h3 style="text-align: center;">Percentage Of Holy Quran Covered: {{ (results[0][0] / 77430 * 100) | round(2) }}%</h3>
+
+    <hr>
+        <form action="/create" method="post">
+   
+        <label>Enter file name:</label>
+        <input type="text" name="filename">
+        <input type="submit" value="Save to File">
+   
+    {% for result in results[1:] %}
+
+
+            <input type="hidden" name="word" value="{{ word }}">
+            <h1><input type="checkbox" name="selected_data" value="Verse_no: {{ result.verse_no }}">Verse_no: {{ result.verse_no }}<br></h1>
+            <input type="checkbox" name="selected_data" value="Arabic: {{ result.Arabic }}" id="arabic-checkbox">
+            <label>Arabic:</label><label for="arabic-checkbox" style="color: #e69900; font-size: 40px;"> <strong>{{ result.Arabic }}</strong></label><br>
+            <input type="checkbox" name="selected_data" value="Urdu: {{ result.Urdu }}" id="urdu-checkbox">
+            <label>Urdu:</label><label for="urdu-checkbox" style="color: #0040ff;"> {{ result.Urdu }}</label><br>
+
+        <input type="checkbox" name="selected_data" value="Wbw_urdu: {{ result.Wbw_Urdu }}">Urdu WBW:
+        <label>
+        {% set segments = result.Wbw_Urdu.split('|') %}
+        {% for segment in segments %}
+            {% if loop.index % 2 == 0 %}
+                <span style="color: #4dc3ff;">{{ segment }}</span>
+            {% else %}
+                <span style="color: #0040ff;">{{ segment }}</span>
+            {% endif %}
+            {% if not loop.last %}|{% endif %}
+                {% endfor %}
+            </label><br>
+
+            <input type="checkbox" name="selected_data" value="English: {{ result.Eng }}" id="eng-checkbox">
+            <label>English:</label><label for="eng-checkbox" style="color:  #b300b3;">{{ result.Eng }}</label><br>
+
+            <input type="checkbox" name="selected_data" value="Wbw_eng: {{result.Wbw_Eng}}" > Eng WBW
+            <label>
+            {% set segments = result.Wbw_Eng.split('|') %}
+            {% for segment in segments %}
+            {% if loop.index % 2 == 0 %}
+                <span style="color: #ec9df5">{{ segment }}</span>
+            {% else %}
+                <span style="color: #b300b3;">{{ segment }}</span>
+            {% endif %}
+            {% if not loop.last %}|{% endif %}
+                {% endfor %}
+            </label><br>
+
+            <input type="checkbox" name="selected_data" value="Urdu_tafseer {{ result.Tafseer }}" id="tafseer-checkbox">
+            <label>Tafseer:</label><label for="tafseer-checkbox" style="color: #00b33c;"> {{ result.Tafseer }}</label><br>
+	    <input type="checkbox" name="selected_data" value="Arabic_tafseer {{ result.Arabic_Tafseer }}" id="tafseer1-checkbox">
+	    <label>Arabic_Tafseer:</label><label for="tafseer1-checkbox" style="color: #f78f88;"> {{ result.Arabic_Tafseer }}</label><br>
+	    {% endfor %}
+
+    </form>
+    
+</body>
+</html>
