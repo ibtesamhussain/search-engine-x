@@ -163,6 +163,7 @@ def preprocess_text(text):
 def create_new_slide(prs):
     layout = prs.slide_layouts[5]
     slide = prs.slides.add_slide(layout)
+    slide.shapes.title.text="Pearls Of Quran"
     return slide
 
 app = Flask(__name__)
@@ -187,25 +188,59 @@ def create():
 
     Layout = X.slide_layouts[0]
     first_slide = X.slides.add_slide(Layout)
-    a="Welome to 3rd lectures"
+    a="Welome to Al-Hidaya Academy"
     first_slide.shapes.title.text = a
-    first_slide.placeholders[1].text = "Created by Tutorialpoints"
+    first_slide.placeholders[1].text = "My lord, increase me in my knowledge [20:119]"
 
 
 
     for i in range(0,len(urdu_wbw_segments),3):
+        a=0
         s=urdu_wbw_segments[i:i+3]
         c=create_new_slide(X)
         textbox = c.shapes.add_textbox(Inches(1), Inches(1.5),Inches(9), Inches(20)) 
         textframe = textbox.text_frame
         paragraph = textframe.add_paragraph()
+        paragraph.font.color.rgb = RGBColor(0, 0, 255)
         for i in s:
-            c=preprocess_text(str(i))
-            paragraph.text=(str(c)+"\n")
-            paragraph = textframe.add_paragraph()
-            paragraph.font.color.rgb = RGBColor(0, 0, 255)
-        
-        textframe.word_wrap = True
+            if i.startswith("Urdu_"):
+                if a==0:
+                    
+                    c=preprocess_text(str(i))
+                    paragraph.text=(str(c)+"\n")
+                    paragraph = textframe.add_paragraph()
+                    paragraph.font.color.rgb = RGBColor(0, 0, 255)
+                    textframe.word_wrap = True
+                    c=create_new_slide(X)
+                    textbox = c.shapes.add_textbox(Inches(1), Inches(1.5),Inches(9), Inches(20)) 
+                    textframe = textbox.text_frame
+                    paragraph = textframe.add_paragraph()
+                    paragraph.font.color.rgb = RGBColor(0, 0, 255)
+                else:
+                    c=create_new_slide(X)
+                    textbox = c.shapes.add_textbox(Inches(1), Inches(1.5),Inches(9), Inches(20)) 
+                    textframe = textbox.text_frame
+                    paragraph = textframe.add_paragraph()
+                    paragraph.font.color.rgb = RGBColor(0, 0, 255)
+                    c=preprocess_text(str(i))
+                    paragraph.text=(str(c)+"\n")
+                    paragraph = textframe.add_paragraph()
+                    paragraph.font.color.rgb = RGBColor(0, 0, 255)
+                    textframe.word_wrap = True
+                    c=create_new_slide(X)
+                    textbox = c.shapes.add_textbox(Inches(1), Inches(1.5),Inches(9), Inches(20)) 
+                    textframe = textbox.text_frame
+                    paragraph = textframe.add_paragraph()
+                    paragraph.font.color.rgb = RGBColor(0, 0, 255)
+
+            else:
+                c=preprocess_text(str(i))
+                paragraph.text=(str(c)+"\n")
+                paragraph = textframe.add_paragraph()
+                paragraph.font.color.rgb = RGBColor(0, 0, 255)
+                textframe.word_wrap = True                
+            a+=1
+
 
     
 
@@ -641,5 +676,3 @@ def search(search_word=None, language=None):
 
 if __name__ == '__main__':
     app.run()
-
-
