@@ -1,3 +1,5 @@
+sudo pip install python-pptx
+from pptx import Presentation
 
 from flask import Flask,jsonify
 import json
