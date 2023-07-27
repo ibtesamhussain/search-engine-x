@@ -3,7 +3,7 @@ from pptx import Presentation
 
 from flask import Flask,jsonify
 import json
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request , send_file
 import sqlite3
 import os
 
@@ -210,10 +210,13 @@ def create():
     
 
     X.save(f"{filename}.pptx")
+
+    path=f"{filename}.pptx"
+    return send_file(path,as_attachment=True,attachment_fileame=f"{filename}.pptx")
     # Clear the session after saving to the file
  
 
-    return f"Urdu WBW segments have been saved to {filename}.txt successfully."
+    #return f"Urdu WBW segments have been saved to {filename}.txt successfully."
 
 
 
