@@ -3,8 +3,32 @@
 <head>
     <title>Search Results</title>
     <style>
-        
+            input[type="submit"] {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .centered-form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+        }
+    .larger-checkbox {
+        width: 24px;
+        height: 24px;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
         h1 {
 
             font-size: 36px;
@@ -65,17 +89,18 @@
     <h3 style="text-align: center;">Percentage Of Holy Quran Covered: {{ (results[0][0] / 77430 * 100) | round(2) }}%</h3>
 
     <hr>
+<div class="centered-form">
         <form action="/create" method="post">
    
         <label>Enter file name:</label>
         <input type="text" name="filename">
-        <input type="submit" value="Save to File">
+        <input type="submit" value="Create Lecture"></div>
    
     {% for result in results[1:] %}
 
 
             <input type="hidden" name="word" value="{{ word }}">
-            <h1><input type="checkbox" name="selected_data" value="Verse_no: {{ result.verse_no }}">Verse_no: {{ result.verse_no }}<br></h1>
+            <h1><input type="checkbox" name="selected_data" value="Verse_no: {{ result.verse_no }} style="width: 50px; height: 50px; margin-right: 10px; vertical-align: middle;">Verse_no: {{ result.verse_no }}<br></h1>
             <input type="checkbox" name="selected_data" value="Arabic: {{ result.Arabic }}" id="arabic-checkbox">
             <label>Arabic:</label><label for="arabic-checkbox" style="color: #e69900; font-size: 40px;"> <strong>{{ result.Arabic }}</strong></label><br>
             <input type="checkbox" name="selected_data" value="Urdu: {{ result.Urdu }}" id="urdu-checkbox">
