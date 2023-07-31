@@ -102,6 +102,14 @@
         }
     </style>
 </head>
+	<script>
+    function downloadFile(url) {
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = url;
+        document.body.appendChild(iframe);
+    }
+</script>
 <body>
       <h1 style="text-align: center;">Search Results</h1>
 
@@ -117,7 +125,7 @@
          <div class="jump-buttons-container">
             <button class="jump-button" onclick="jumpToBottom()">Jump to Bottom</button></div> 
 <div class="centered-form">
-        <form action="/create" method="post">
+        <form action="/create" method="post" onsubmit="downloadFile('/create')">
    
         <label>Enter file name:</label>
         <input type="text" name="filename">
