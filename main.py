@@ -247,11 +247,11 @@ def create():
     X.save(f"{filename}.pptx")
 
     path=f"{filename}.pptx"
-    return send_file(path,as_attachment=True)
+    send_file(path,as_attachment=True)
     # Clear the session after saving to the file
  
 
-    #return f"Urdu WBW segments have been saved to {filename}.txt successfully."
+    return f"{filename}.ppt have been saved successfully."
 
 
 
