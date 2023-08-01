@@ -247,7 +247,7 @@ def create():
     X.save(f"{filename}.pptx")
 
     path=f"{filename}.pptx"
-    return send_file(path,as_attachment=True)
+    return send_file(path)
     # Clear the session after saving to the file
  
 
